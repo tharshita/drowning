@@ -15,7 +15,8 @@ class App extends Component {
       isDrowning: false,
       inspirationQuotes: [],
       quote: '',
-      author: ''
+      author: '',
+      addresses: []
     };
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -39,12 +40,13 @@ class App extends Component {
     .catch(error => console.error(error))
   }
 
-  fetchAddress = async (latitude, longitude) => {
-    await axios.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," +longitude + "&key=AIzaSyA9umthbEuph3aHr6-fWsEiPKtWAVGssfA")
+  fetchAddress = async () => {
+    const {latitude, longitude} = this.state;
+    await axios.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyA9umthbEuph3aHr6-fWsEiPKtWAVGssfA")
     .then(response => {
-      console.log(response.data)
+      console.log(response.data.results)
       this.setState({
-
+        addresses: response.data.results
       });
     })
     .catch(error => console.error(error))
@@ -63,7 +65,7 @@ class App extends Component {
       latitude: parseFloat(this.state.latitude).toFixed(2)
     }
     this.checkDrowning(search.longitude, search.latitude)
-    this.fetchAddress(search.longitude, search.latitude)
+    this.fetchAddress()
   }
 
   checkDrowning = async (longitude, latitude) => {
@@ -99,7 +101,7 @@ class App extends Component {
   }
 
   render() {
-    const {showModal, quote, author, isDrowning, latitude, longitude} = this.state;
+    const {showModal, quote, author, isDrowning, latitude, longitude, addresses} = this.state;
     const renderConfetti = ()=>{
       if(!isDrowning){
         return <ConfettiCanvas
@@ -130,13 +132,14 @@ class App extends Component {
             Where am I?
           </Modal.Header>
           <Modal.Content>
-            <b>{isDrowning? 'You\'re drowning but it\'s ok!': 'You\'re safe on land!'}</b>
+            <b>{isDrowning? 'You\'re drowning but it\'s ok!': 'You\'re safe on land! Congrats!'}</b>
+            <p> {(addresses[0])? "You\'re near " + (addresses[0]).formatted_address: "We have no clue where you are"}</p>
             <br></br>
-            <img src={"https://maps.googleapis.com/maps/api/staticmap?markers=size:small%7C" + latitude+ ',' +longitude + "&zoom=11&size=400x400&key=AIzaSyBoyAr-jdEmaxd9jSVHBwCkeohtXOZdN2g"}></img>
+            <img src={"https://maps.googleapis.com/maps/api/staticmap?markers=size:small%7C" + latitude + ',' +longitude + "&zoom=11&size=400x400&key=AIzaSyBoyAr-jdEmaxd9jSVHBwCkeohtXOZdN2g"}></img>
             <br></br>
             {renderConfetti()}
             <br></br>
-            <p>{isDrowning? 'Here\'s a motivational quote to get you out of sad waters:': 'Congrats!'}</p>
+            <p>{isDrowning? 'Here\'s a motivational quote to get you out of sad waters:': 'Here\'s a quote to cheer your success on:'}</p>
             <p> </p>
             <br></br>
             {quote}
