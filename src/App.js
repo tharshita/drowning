@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Container, Button, Form, Modal} from 'semantic-ui-react'
 import axios from 'axios';
+import ConfettiCanvas from 'react-confetti-canvas';
 
 class App extends Component {
   constructor(props) {
@@ -11,12 +12,30 @@ class App extends Component {
       latitude: 0,
       longitude: 0,
       showModal: false,
-      drowning: false
+      isDrowning: false,
+      inspirationQuotes: [],
+      quote: '',
+      author: ''
     };
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
+    this.findQuote = this.findQuote.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchQuotes();
+  }
+
+  fetchQuotes = async () => {
+    await axios.get("https://type.fit/api/quotes")
+    .then(response => {
+      this.setState({
+        inspirationQuotes: response.data
+      });
+    })
+    .catch(error => console.error(error))
   }
 
   onChangeHandler = (event) => {
@@ -31,17 +50,33 @@ class App extends Component {
       longitude: parseFloat(this.state.longitude).toFixed(2),
       latitude: parseFloat(this.state.latitude).toFixed(2)
     }
-    console.log(search.latitude)
-    console.log(search.longitude)
-    await axios.get("https://api.onwater.io/api/v1/results/" + search.latitude + "," + search.longitude + "?")
+    this.checkDrowning(search.longitude, search.latitude)
+  }
+
+  checkDrowning = async (longitude, latitude) => {
+    await axios.get("https://api.onwater.io/api/v1/results/" + latitude + "," + longitude + "?access_token=GY-kZ1a_fKoME8juAJcZ")
     .then(response => {
+      console.log(response.data)
       this.setState({
         showModal: true,
-        drowning: response.data.water
+        isDrowning: response.data.water
       });
-      console.log(this.state.showModal)
+      this.findQuote(response.data.water)
     })
     .catch(error => console.error(error))
+  }
+
+  findQuote = async (isDrowning) => {
+    const {inspirationQuotes} = this.state;
+    if(isDrowning) {
+      const randomQuote = inspirationQuotes[Math.floor(Math.random() * inspirationQuotes.length)]
+      console.log()
+      this.setState({
+        quote: randomQuote.text,
+        author: randomQuote.author
+      });
+      
+    }
   }
 
   handleModalClose = () => {
@@ -51,7 +86,13 @@ class App extends Component {
   }
 
   render() {
-    const {showModal} = this.state;
+    const {showModal, quote, author, isDrowning} = this.state;
+    const renderConfetti = ()=>{
+      if(!isDrowning){
+        return <ConfettiCanvas
+        duration={0.001} />
+      }
+    }
     return (
       <div className="App">
         <header className="App-header">
@@ -76,13 +117,17 @@ class App extends Component {
             Where am I?
           </Modal.Header>
           <Modal.Content>
-            {this.drowning? 'You\'re drowning': 'You\'re safe'}
+            <b>{isDrowning? 'You\'re drowning but it\'s ok!': 'You\'re safe on land! Congrats!'}</b>
+            <br></br>
+            <br></br>
+            {renderConfetti()}
+            {quote}
+            {' ~' + author}
           </Modal.Content>
         </Modal>
       </div>
     );
   }
-
 }
 
 
