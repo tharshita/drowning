@@ -6,10 +6,9 @@ cache:
   - node_modules
 script:
   - npm run predeploy
-  - npm run deploy
 deploy:
   provider: pages
   skip_cleanup: true
   local_dir: build
   on:
-    branch: master
+    branch: main
