@@ -130,9 +130,9 @@ class App extends Component {
           </Modal.Header>
           <Modal.Content>
             <b>{isDrowning? 'You\'re drowning but it\'s ok!': 'You\'re safe on land! Congrats!'}</b>
-            <p> {(addresses[0])? "You\'re near " + (addresses[0]).formatted_address: "We have no clue where you are"}</p>
+            <p> {(addresses[0])? "You're near " + (addresses[0]).formatted_address: "We have no clue where you are"}</p>
             <br></br>
-            <img src={"https://maps.googleapis.com/maps/api/staticmap?markers=size:small%7C" + latitude + ',' +longitude + "&zoom=11&size=400x400&key=AIzaSyBoyAr-jdEmaxd9jSVHBwCkeohtXOZdN2g"}></img>
+            <img src={"https://maps.googleapis.com/maps/api/staticmap?markers=size:small%7C" + latitude + ',' +longitude + "&zoom=11&size=400x400&key=AIzaSyBoyAr-jdEmaxd9jSVHBwCkeohtXOZdN2g"} alt="google map"></img>
             <br></br>
             {renderConfetti()}
             <br></br>
