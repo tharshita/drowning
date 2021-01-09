@@ -76,22 +76,19 @@ class App extends Component {
         showModal: true,
         isDrowning: response.data.water
       });
-      this.findQuote(response.data.water)
+      this.findQuote()
     })
     .catch(error => console.error(error))
   }
 
-  findQuote = async (isDrowning) => {
+  findQuote = async () => {
     const {inspirationQuotes} = this.state;
-    if(isDrowning) {
-      const randomQuote = inspirationQuotes[Math.floor(Math.random() * inspirationQuotes.length)]
-      console.log()
-      this.setState({
-        quote: randomQuote.text,
-        author: randomQuote.author
-      });
-      
-    }
+    const randomQuote = inspirationQuotes[Math.floor(Math.random() * inspirationQuotes.length)]
+    console.log()
+    this.setState({
+      quote: randomQuote.text,
+      author: randomQuote.author
+    });
   }
 
   handleModalClose = () => {
