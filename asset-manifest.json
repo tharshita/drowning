@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/drowning/static/css/main.e9537172.chunk.css",
+    "main.js": "/drowning/static/js/main.e01ecfa0.chunk.js",
+    "main.js.map": "/drowning/static/js/main.e01ecfa0.chunk.js.map",
+    "runtime-main.js": "/drowning/static/js/runtime-main.a21d381e.js",
+    "runtime-main.js.map": "/drowning/static/js/runtime-main.a21d381e.js.map",
+    "static/css/2.c977f4a5.chunk.css": "/drowning/static/css/2.c977f4a5.chunk.css",
+    "static/js/2.6be1dea6.chunk.js": "/drowning/static/js/2.6be1dea6.chunk.js",
+    "static/js/2.6be1dea6.chunk.js.map": "/drowning/static/js/2.6be1dea6.chunk.js.map",
+    "static/js/3.651d6305.chunk.js": "/drowning/static/js/3.651d6305.chunk.js",
+    "static/js/3.651d6305.chunk.js.map": "/drowning/static/js/3.651d6305.chunk.js.map",
+    "index.html": "/drowning/index.html",
+    "static/css/2.c977f4a5.chunk.css.map": "/drowning/static/css/2.c977f4a5.chunk.css.map",
+    "static/css/main.e9537172.chunk.css.map": "/drowning/static/css/main.e9537172.chunk.css.map",
+    "static/js/2.6be1dea6.chunk.js.LICENSE.txt": "/drowning/static/js/2.6be1dea6.chunk.js.LICENSE.txt",
+    "static/media/semantic.min.css": "/drowning/static/media/outline-icons.ddae9b1b.woff",
+    "static/media/human.440047f1.png": "/drowning/static/media/human.440047f1.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a21d381e.js",
+    "static/css/2.c977f4a5.chunk.css",
+    "static/js/2.6be1dea6.chunk.js",
+    "static/css/main.e9537172.chunk.css",
+    "static/js/main.e01ecfa0.chunk.js"
+  ]
+}
